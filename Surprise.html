@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Disappearing Button</title>
+<style>
+  body {
+    margin: 0;
+    background-color: black; /* Changed background color to black */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden; /* Hide overflowing content */
+  }
+  .big-button {
+    font-size: 24px;
+    padding: 20px 40px;
+    background-color: pink;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    position: absolute;
+    z-index: 1; /* Ensure the button is above the video */
+  }
+  video {
+    display: none; /* Initially hide the video */
+    position: absolute;
+    top: 0;
+    left: 0;
+    min-width: 100%;
+    min-height: 100%;
+    z-index: 0; /* Ensure the video is behind other elements */
+  }
+</style>
+</head>
+<body>
+<button id="disappearingButton" class="big-button">Click Me</button>
+
+<video id="myVideo" autoplay loop muted width="50%" height="50%">
+  <source src="foru.mp4" type="video/mp4"> <!-- Path to your video file -->
+  Your browser does not support the video tag.
+</video>
+
+
+<script>
+  let clicksLeft = 10;
+  const button = document.getElementById('disappearingButton');
+  const video = document.getElementById('myVideo'); // Get the video element
+
+  button.addEventListener('click', function() {
+    if (clicksLeft > 0) {
+      const randomX = Math.floor(Math.random() * window.innerWidth);
+      const randomY = Math.floor(Math.random() * window.innerHeight);
+      button.style.top = `${randomY}px`;
+      button.style.left = `${randomX}px`;
+      
+      button.style.display = 'none';
+      clicksLeft--;
+      setTimeout(() => {
+        button.style.display = 'inline-block';
+      }, 500);
+    } else {
+      button.style.display = 'none';
+      video.style.display = 'block'; // Show the video
+      video.play(); // Start playing the video
+      // Show popup message
+      alert("These flowers getting generated are for you :> (yes I coded them if you're asking)");
+    }
+  });
+</script>
+</body>
+</html>
